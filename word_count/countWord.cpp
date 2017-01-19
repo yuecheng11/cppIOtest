@@ -9,6 +9,11 @@
 
 using namespace std;
 
+typedef struct
+{
+	string word;
+	int num;
+}Elem;
 
 class WordStatic
 {
