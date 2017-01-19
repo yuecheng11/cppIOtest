@@ -18,17 +18,17 @@ int test()
 
 	string s;
 
-	/*while(ifs>>s)
+	while(ifs>>s)
 	{
 		sleep(2);
 		cout<<"read s : "<<s<<endl;
-	}*/
+	}
 
-	while(getline(ifs,s))
+	/*while(getline(ifs,s))
 	{
 		sleep(2);
 		cout<<s<<endl;
-	}
+	}*/
 
 	
 
