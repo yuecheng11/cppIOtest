@@ -24,7 +24,7 @@ public:
 private:
 	bool isnum(string s);
 	bool is_str_in_vec(string s);
-	vector<std::string> vecword;
+	vector<Elem> vecword;
 
 };
 
@@ -40,6 +40,9 @@ void WordStatic::read_file(string filename)
 		return ;
 	}
 
+	Elem countElem;
+	countElem.num = 1;
+	
 	string sTmp;
 	while(ifs>>sTmp)
 	{
@@ -51,7 +54,9 @@ void WordStatic::read_file(string filename)
 		{
 			continue;
 		}
-		vecword.push_back(sTmp);
+		countElem.word = sTmp;
+		
+		vecword.push_back(countElem);
 	}
 }
 
@@ -66,39 +71,26 @@ bool WordStatic::isnum(string s)
 		return false;
 	}
 	else
-		return true;
-	
+		{
+			return true;
+		}
 	return false;
 }
 
 bool WordStatic::is_str_in_vec(string s)
 {
-	vector<std::string>::iterator it;
-	it = std::find(vecword.begin(),vecword.end(),s);
-	if(it == vecword.end())
+	vector<Elem>::iterator it;
+	for(it = vecword.begin();it!=vecword.end();++it)
 	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-
-/*void WordStatic::print_vec_value()
-{
-	int i = 0;
-	for(vector<string>::iterator it = vecword.begin();it != vecword.end();++it)
-	{
-		cout<<*it;
-		
-		if(i == 10)
+		if(it->word == s)
 		{
-			cout<<endl;
+			it->num++;
+			return true;
 		}
-		i++;
 	}
-}*/
+
+	return false;
+}
 
 void WordStatic::write_file(string filename)
 {
@@ -111,32 +103,14 @@ void WordStatic::write_file(string filename)
 	}
 	
 	int i = 0;
-	
 
-	ifstream ifs("The_Holy_Bible.txt");
-	if(!ifs.good())
-	{
-		cout<<"file open failed!"<<endl;
-		return ;
-	}
 	
 	string s;
 
-	for(vector<std::string>::iterator it = vecword.begin();it != vecword.end();++it)
+	for(vector<Elem>::iterator it = vecword.begin();it != vecword.end();++it)
 	{
 		
-		while(ifs>>s)
-		{
-
-			if(*it== s)
-			{
-				cout<<"========";
-				i++;
-			}
-		}
-
-		cout<<*it<<"  :  "<<i<<endl;
-		i = 0;
+		ofs<<it->word<<"  :  "<<it->num << "times"<<endl;
 	}
 
 	
@@ -149,8 +123,7 @@ int main()
 	ws.read_file("The_Holy_Bible.txt");
 
 	cout<<"test print value "<<endl;
-	//ws.print_vec_value();
-
+	
 	string write_filename("count.txt");
 	ws.write_file(write_filename);
 	
